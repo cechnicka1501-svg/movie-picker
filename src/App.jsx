@@ -1,11 +1,16 @@
 import { useState, useCallback } from 'react'
+import { AuthProvider, useAuth } from './components/AuthProvider.jsx'
+import { AuthScreen } from './components/AuthScreen.jsx'
 import { fetchMoviesFromTMDB, fetchMovieDetails } from './data/tmdbService.js'
 import { pickMovie } from './logic/pickMovie.js'
 import { useFilterState } from './state/useFilterState.js'
 import { FilterScreen } from './components/FilterScreen.jsx'
 import { ResultScreen } from './components/ResultScreen.jsx'
 
-export default function App() {
+// ─── Inner app — only rendered when user is known ────────────────────────────
+function AppContent() {
+  const { user, loading: authLoading } = useAuth()
+
   const [view, setView] = useState('filter')
   const [pickedMovie, setPickedMovie] = useState(null)
   const [filteredSet, setFilteredSet] = useState([])
@@ -20,21 +25,18 @@ export default function App() {
     try {
       const movies = await fetchMoviesFromTMDB(filters)
       const basicPick = pickMovie(movies)
-
       if (!basicPick) {
         setFilteredSet([])
         setPickedMovie(null)
         setView('result')
         return
       }
-
-      // Fetch full details for the picked movie to get runtime
       const detailed = await fetchMovieDetails(basicPick.id)
       setFilteredSet(movies)
       setPickedMovie(detailed)
       setView('result')
     } catch (err) {
-      setError('Nie udało się pobrać filmów. Sprawdź połączenie z internetem.')
+      setError('Could not fetch movies. Check your internet connection.')
     } finally {
       setLoading(false)
     }
@@ -49,7 +51,7 @@ export default function App() {
       const detailed = await fetchMovieDetails(basicPick.id)
       setPickedMovie(detailed)
     } catch (err) {
-      setError('Nie udało się pobrać szczegółów filmu.')
+      setError('Could not fetch movie details.')
     } finally {
       setLoading(false)
     }
@@ -66,6 +68,29 @@ export default function App() {
     setError(null)
   }, [clearAll])
 
+  // While Supabase checks the session, show a spinner
+  if (authLoading) {
+    return (
+      <div className="app-shell">
+        <div className="phone-frame auth-loading-frame">
+          <span className="spinner spinner--dark" />
+        </div>
+      </div>
+    )
+  }
+
+  // Not logged in → show auth screen
+  if (!user) {
+    return (
+      <div className="app-shell">
+        <div className="phone-frame">
+          <AuthScreen />
+        </div>
+      </div>
+    )
+  }
+
+  // Logged in → existing app
   return (
     <div className="app-shell">
       <div className="phone-frame">
@@ -91,5 +116,14 @@ export default function App() {
         )}
       </div>
     </div>
+  )
+}
+
+// ─── Root — provides auth context to the whole tree ──────────────────────────
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   )
 }
