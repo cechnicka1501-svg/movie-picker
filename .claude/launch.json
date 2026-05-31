@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "movie-picker",
+      "runtimeExecutable": "/Applications/Adobe Photoshop 2026/Adobe Photoshop 2026.app/Contents/MacOS/node",
+      "runtimeArgs": ["/Users/kamilacechnicka/movie-picker/node_modules/.bin/vite", "--port", "5173"],
+      "port": 5173
+    }
+  ]
+}
