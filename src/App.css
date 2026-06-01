@@ -54,6 +54,7 @@ input {
   display: flex;
   flex-direction: column;
   flex: 1;
+  width: 100%;
   overflow: hidden;
 }
 
@@ -493,6 +494,7 @@ input {
   display: flex;
   flex-direction: column;
   flex: 1;
+  width: 100%;
   overflow: hidden;
 }
 
@@ -939,6 +941,7 @@ input {
   display: flex;
   flex-direction: column;
   flex: 1;
+  width: 100%;
   overflow: hidden;
   background: #FAF8F5;
 }
@@ -1135,6 +1138,7 @@ input {
   display: flex;
   flex-direction: column;
   flex: 1;
+  width: 100%;
   overflow: hidden;
   background: #FAF8F5;
 }
@@ -1364,6 +1368,7 @@ input {
   display: flex;
   flex-direction: column;
   flex: 1;
+  width: 100%;
   overflow: hidden;
   background: #FAF8F5;
 }
