@@ -8,12 +8,14 @@ import { useWatchQueue } from './state/useWatchQueue.js'
 import { FilterScreen } from './components/FilterScreen.jsx'
 import { ResultScreen } from './components/ResultScreen.jsx'
 import { WatchQueueScreen } from './components/WatchQueueScreen.jsx'
+import { ProfileScreen } from './components/ProfileScreen.jsx'
+import { EditProfileScreen } from './components/EditProfileScreen.jsx'
 
 // ─── Inner app — only rendered when user is known ────────────────────────────
 function AppContent() {
   const { user, loading: authLoading } = useAuth()
 
-  const [view, setView] = useState('filter') // 'filter' | 'result' | 'queue'
+  const [view, setView] = useState('filter') // 'filter' | 'result' | 'queue' | 'profile' | 'editProfile'
   const [pickedMovie, setPickedMovie] = useState(null)
   const [filteredSet, setFilteredSet] = useState([])
   const [loading, setLoading] = useState(false)
@@ -71,15 +73,11 @@ function AppContent() {
     setError(null)
   }, [clearAll])
 
-  const handleGoToQueue = useCallback(() => {
-    setView('queue')
-    setError(null)
-  }, [])
-
-  const handleGoToExplore = useCallback(() => {
-    setView('filter')
-    setError(null)
-  }, [])
+  const handleGoToQueue   = useCallback(() => { setView('queue');   setError(null) }, [])
+  const handleGoToExplore = useCallback(() => { setView('filter');  setError(null) }, [])
+  const handleGoToProfile = useCallback(() => { setView('profile'); setError(null) }, [])
+  const handleGoToEdit    = useCallback(() => { setView('editProfile') }, [])
+  const handleBackFromEdit = useCallback(() => { setView('profile') }, [])
 
   // While Supabase checks the session, show a spinner
   if (authLoading) {
@@ -116,6 +114,7 @@ function AppContent() {
             loading={loading}
             error={error}
             onGoToQueue={handleGoToQueue}
+            onGoToProfile={handleGoToProfile}
           />
         )}
         {view === 'result' && (
@@ -131,6 +130,7 @@ function AppContent() {
             onRemoveFromQueue={removeFromQueue}
             isInQueue={isInQueue}
             onGoToQueue={handleGoToQueue}
+            onGoToProfile={handleGoToProfile}
           />
         )}
         {view === 'queue' && (
@@ -139,6 +139,22 @@ function AppContent() {
             onRemove={removeFromQueue}
             onToggleWatched={toggleWatched}
             onGoToExplore={handleGoToExplore}
+            onGoToProfile={handleGoToProfile}
+          />
+        )}
+        {view === 'profile' && (
+          <ProfileScreen
+            user={user}
+            queue={queue}
+            onEdit={handleGoToEdit}
+            onGoToExplore={handleGoToExplore}
+            onGoToQueue={handleGoToQueue}
+          />
+        )}
+        {view === 'editProfile' && (
+          <EditProfileScreen
+            user={user}
+            onBack={handleBackFromEdit}
           />
         )}
       </div>
