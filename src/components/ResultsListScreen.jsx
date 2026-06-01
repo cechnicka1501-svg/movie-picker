@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 const POSTER_COLORS = [
   '#3D2B4A', '#2B3D4A', '#4A3D2B', '#2B4A3D', '#4A2B3D',
   '#3D4A2B', '#2B2B4A', '#4A4A2B', '#2B4A4A', '#4A2B2B',
@@ -39,9 +41,11 @@ export function ResultsListScreen({
   isInQueue,
   queueCount = 0,
 }) {
+  const [skipped, setSkipped] = useState([])
   const activeChips = getActiveChips(filters)
   const ratingSource = filters.ratingSource
   const firstMood = filters.moods[0] ?? null
+  const visibleMovies = movies.filter((m) => !skipped.includes(m.id))
 
   return (
     <div className="results-screen">
@@ -93,7 +97,7 @@ export function ResultsListScreen({
         </div>
         {!loading && (
           <span className="results-count">
-            {movies.length} {movies.length === 1 ? 'movie' : 'movies'}
+            {visibleMovies.length} {visibleMovies.length === 1 ? 'movie' : 'movies'}
           </span>
         )}
       </div>
@@ -104,7 +108,7 @@ export function ResultsListScreen({
           <div className="results-loading">
             <span className="spinner spinner--dark" />
           </div>
-        ) : movies.length === 0 ? (
+        ) : visibleMovies.length === 0 ? (
           <div className="results-empty">
             <div className="results-empty__icon">🎬</div>
             <h2 className="results-empty__title">No movies match your filters</h2>
@@ -115,7 +119,7 @@ export function ResultsListScreen({
           </div>
         ) : (
           <div className="results-list">
-            {movies.map((movie) => (
+            {visibleMovies.map((movie) => (
               <MovieCard
                 key={movie.id}
                 movie={movie}
@@ -124,6 +128,7 @@ export function ResultsListScreen({
                 saved={isInQueue && isInQueue(movie.id)}
                 onSave={() => onSave(movie, ratingSource)}
                 onRemove={() => onRemoveFromQueue(movie.id)}
+                onSkip={() => setSkipped((prev) => [...prev, movie.id])}
               />
             ))}
           </div>
@@ -156,7 +161,7 @@ export function ResultsListScreen({
   )
 }
 
-function MovieCard({ movie, ratingSource, firstMood, saved, onSave, onRemove }) {
+function MovieCard({ movie, ratingSource, firstMood, saved, onSave, onRemove, onSkip }) {
   const rating = ratingSource === 'filmweb' ? movie.ratingFilmweb : movie.ratingIMDb
   const displayGenres = (movie.genres || []).slice(0, 3)
 
@@ -203,7 +208,7 @@ function MovieCard({ movie, ratingSource, firstMood, saved, onSave, onRemove }) 
           >
             {saved ? '✓ Saved' : 'Save'}
           </button>
-          <button type="button" className="results-card__skip-btn">
+          <button type="button" className="results-card__skip-btn" onClick={onSkip}>
             Skip
           </button>
         </div>

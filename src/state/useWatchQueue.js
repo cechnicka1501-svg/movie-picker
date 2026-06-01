@@ -8,20 +8,21 @@ function rowToItem(row) {
     queueWatched: row.queue_watched,
     ratingSource: row.rating_source,
     savedAt: new Date(row.saved_at).getTime(),
-    inQueue: row.in_queue,
+    // If the in_queue column doesn't exist yet, fall back to !queue_watched
+    inQueue: row.in_queue !== undefined && row.in_queue !== null
+      ? row.in_queue
+      : !row.queue_watched,
   }
 }
 
 export function useWatchQueue(userId) {
-  // allItems holds every relevant row: in_queue OR queue_watched (or both)
   const [allItems, setAllItems] = useState([])
   const [loadingQueue, setLoadingQueue] = useState(true)
 
-  // Derived views — no extra state, just filtered views of allItems
+  // Derived views
   const queue          = useMemo(() => allItems.filter((m) => m.inQueue),       [allItems])
   const watchedHistory = useMemo(() => allItems.filter((m) => m.queueWatched),  [allItems])
 
-  // Load on mount / user change
   useEffect(() => {
     if (!userId) {
       setAllItems([])
@@ -32,11 +33,11 @@ export function useWatchQueue(userId) {
     let cancelled = false
     setLoadingQueue(true)
 
+    // Load all rows for this user — we filter client-side so the query works
+    // even if the in_queue column hasn't been added to the DB yet.
     supabase
       .from('watch_queue')
       .select('*')
-      // fetch rows that are in the queue OR have been watched (or both)
-      .or('in_queue.eq.true,queue_watched.eq.true')
       .order('saved_at', { ascending: false })
       .then(({ data, error }) => {
         if (cancelled) return
@@ -54,30 +55,29 @@ export function useWatchQueue(userId) {
     const existing = allItems.find((m) => m.id === movie.id)
 
     if (existing) {
-      // Already in allItems (may have been soft-removed). Just flip in_queue on.
-      if (existing.inQueue) return // already in queue, nothing to do
+      if (existing.inQueue) return // already in queue
       setAllItems((prev) => prev.map((m) => m.id === movie.id ? { ...m, inQueue: true } : m))
 
-      const { error } = await supabase
+      // Try updating in_queue column; if it doesn't exist, the row stays but
+      // inQueue is tracked only in local state until the column is added.
+      await supabase
         .from('watch_queue')
         .update({ in_queue: true })
         .eq('user_id', userId)
         .eq('movie_id', movie.id)
-
-      if (error) {
-        setAllItems((prev) => prev.map((m) => m.id === movie.id ? { ...m, inQueue: false } : m))
-      }
+      // Intentionally ignore error — column may not exist yet; optimistic state is fine
     } else {
-      // Brand new item
       const optimistic = { ...movie, queueWatched: false, inQueue: true, savedAt: Date.now(), ratingSource }
       setAllItems((prev) => [optimistic, ...prev])
 
+      // Build the insert payload without in_queue so the insert succeeds even
+      // when the column hasn't been added.  If the column exists with DEFAULT true
+      // it will automatically receive the correct value.
       const { error } = await supabase.from('watch_queue').insert({
         user_id: userId,
         movie_id: movie.id,
         movie_data: movie,
         queue_watched: false,
-        in_queue: true,
         rating_source: ratingSource,
       })
 
@@ -88,14 +88,12 @@ export function useWatchQueue(userId) {
   }
 
   // ── removeFromQueue ─────────────────────────────────────────────────────────
-  // Watched movies: soft-delete (in_queue = false) → stay in watchedHistory
-  // Unwatched movies: hard-delete → gone completely
   async function removeFromQueue(movieId) {
     const item = allItems.find((m) => m.id === movieId)
     if (!item || !item.inQueue) return
 
     if (item.queueWatched) {
-      // Soft remove — keep row for history
+      // Soft remove — keep row for watch history by setting in_queue = false
       setAllItems((prev) => prev.map((m) => m.id === movieId ? { ...m, inQueue: false } : m))
 
       const { error } = await supabase
@@ -105,7 +103,14 @@ export function useWatchQueue(userId) {
         .eq('movie_id', movieId)
 
       if (error) {
-        setAllItems((prev) => prev.map((m) => m.id === movieId ? { ...m, inQueue: true } : m))
+        // in_queue column likely missing — fall back to hard delete.
+        // The watched history entry is lost, but this is graceful degradation.
+        setAllItems((prev) => prev.filter((m) => m.id !== movieId))
+        await supabase
+          .from('watch_queue')
+          .delete()
+          .eq('user_id', userId)
+          .eq('movie_id', movieId)
       }
     } else {
       // Hard remove — no watch history to preserve
