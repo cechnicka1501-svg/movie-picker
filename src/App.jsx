@@ -7,6 +7,7 @@ import { useFilterState } from './state/useFilterState.js'
 import { useWatchQueue } from './state/useWatchQueue.js'
 import { FilterScreen } from './components/FilterScreen.jsx'
 import { ResultScreen } from './components/ResultScreen.jsx'
+import { ResultsListScreen } from './components/ResultsListScreen.jsx'
 import { WatchQueueScreen } from './components/WatchQueueScreen.jsx'
 import { ProfileScreen } from './components/ProfileScreen.jsx'
 import { EditProfileScreen } from './components/EditProfileScreen.jsx'
@@ -15,7 +16,7 @@ import { EditProfileScreen } from './components/EditProfileScreen.jsx'
 function AppContent() {
   const { user, loading: authLoading } = useAuth()
 
-  const [view, setView] = useState('filter') // 'filter' | 'result' | 'queue' | 'profile' | 'editProfile'
+  const [view, setView] = useState('filter') // 'filter' | 'result' | 'results' | 'queue' | 'profile' | 'editProfile'
   const [pickedMovie, setPickedMovie] = useState(null)
   const [filteredSet, setFilteredSet] = useState([])
   const [loading, setLoading] = useState(false)
@@ -40,6 +41,20 @@ function AppContent() {
       setFilteredSet(movies)
       setPickedMovie(detailed)
       setView('result')
+    } catch (err) {
+      setError('Could not fetch movies. Check your internet connection.')
+    } finally {
+      setLoading(false)
+    }
+  }, [filters])
+
+  const handleShowResults = useCallback(async () => {
+    setLoading(true)
+    setError(null)
+    try {
+      const movies = await fetchMoviesFromTMDB(filters)
+      setFilteredSet(movies)
+      setView('results')
     } catch (err) {
       setError('Could not fetch movies. Check your internet connection.')
     } finally {
@@ -73,10 +88,10 @@ function AppContent() {
     setError(null)
   }, [clearAll])
 
-  const handleGoToQueue   = useCallback(() => { setView('queue');   setError(null) }, [])
-  const handleGoToExplore = useCallback(() => { setView('filter');  setError(null) }, [])
-  const handleGoToProfile = useCallback(() => { setView('profile'); setError(null) }, [])
-  const handleGoToEdit    = useCallback(() => { setView('editProfile') }, [])
+  const handleGoToQueue    = useCallback(() => { setView('queue');   setError(null) }, [])
+  const handleGoToExplore  = useCallback(() => { setView('filter');  setError(null) }, [])
+  const handleGoToProfile  = useCallback(() => { setView('profile'); setError(null) }, [])
+  const handleGoToEdit     = useCallback(() => { setView('editProfile') }, [])
   const handleBackFromEdit = useCallback(() => { setView('profile') }, [])
 
   // While Supabase checks the session, show a spinner
@@ -111,6 +126,7 @@ function AppContent() {
             setters={setters}
             clearAll={clearAll}
             onGetPick={handleGetPick}
+            onShowResults={handleShowResults}
             loading={loading}
             error={error}
             onGoToQueue={handleGoToQueue}
@@ -131,6 +147,20 @@ function AppContent() {
             isInQueue={isInQueue}
             onGoToQueue={handleGoToQueue}
             onGoToProfile={handleGoToProfile}
+          />
+        )}
+        {view === 'results' && (
+          <ResultsListScreen
+            movies={filteredSet}
+            filters={filters}
+            loading={loading}
+            onBack={handleBack}
+            onGoToQueue={handleGoToQueue}
+            onGoToProfile={handleGoToProfile}
+            onSave={addToQueue}
+            onRemoveFromQueue={removeFromQueue}
+            isInQueue={isInQueue}
+            queueCount={queue.length}
           />
         )}
         {view === 'queue' && (

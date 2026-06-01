@@ -22,7 +22,7 @@ const RATING_OPTIONS = [
   { label: 'Filmweb', value: 'filmweb' },
 ]
 
-export function FilterScreen({ filters, setters, clearAll, onGetPick, loading = false, error = null, onGoToQueue, onGoToProfile }) {
+export function FilterScreen({ filters, setters, clearAll, onGetPick, onShowResults, loading = false, error = null, onGoToQueue, onGoToProfile }) {
   const { signOut } = useAuth()
   const {
     searchScope, selectedServices, includeTVAiring, moods, ratingSource,
@@ -157,12 +157,14 @@ export function FilterScreen({ filters, setters, clearAll, onGetPick, loading = 
         >
           {loading ? <span className="spinner" /> : 'Get 1 pick'}
         </button>
-        <div className="btn-secondary-wrap">
-          <button type="button" className="btn btn--secondary" disabled title="Coming later">
-            Show results
-          </button>
-          <span className="coming-later-label">Coming later</span>
-        </div>
+        <button
+          type="button"
+          className={`btn btn--secondary btn--secondary-active${loading ? ' btn--loading' : ''}`}
+          onClick={onShowResults}
+          disabled={loading}
+        >
+          {loading ? <span className="spinner spinner--dark" /> : 'Show results'}
+        </button>
         <button type="button" className="text-action text-action--center" onClick={clearAll}>
           Clear all
         </button>
