@@ -23,7 +23,7 @@ function AppContent() {
   const [error, setError] = useState(null)
 
   const { filters, setters, clearAll } = useFilterState()
-  const { queue, addToQueue, removeFromQueue, isInQueue, toggleWatched } = useWatchQueue(user?.id)
+  const { queue, watchedHistory, addToQueue, removeFromQueue, isInQueue, toggleWatched } = useWatchQueue(user?.id)
 
   const handleGetPick = useCallback(async () => {
     setLoading(true)
@@ -176,6 +176,7 @@ function AppContent() {
           <ProfileScreen
             user={user}
             queue={queue}
+            watchedHistory={watchedHistory}
             onEdit={handleGoToEdit}
             onGoToExplore={handleGoToExplore}
             onGoToQueue={handleGoToQueue}

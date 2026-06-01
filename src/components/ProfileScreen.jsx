@@ -26,17 +26,17 @@ function getInitials(displayName, email) {
   return name[0].toUpperCase()
 }
 
-export function ProfileScreen({ user, queue, onEdit, onGoToExplore, onGoToQueue }) {
+export function ProfileScreen({ user, queue, watchedHistory = [], onEdit, onGoToExplore, onGoToQueue }) {
   const metadata = user?.user_metadata || {}
   const displayName = metadata.display_name || user?.email?.split('@')[0] || 'User'
   const username = metadata.username || null
   const email = user?.email || ''
 
   const saved = queue.length
-  const watched = useMemo(() => queue.filter((m) => m.queueWatched).length, [queue])
+  const watched = watchedHistory.length
   const recentlyWatched = useMemo(
-    () => [...queue].filter((m) => m.queueWatched).slice(0, 12),
-    [queue]
+    () => watchedHistory.slice(0, 12),
+    [watchedHistory]
   )
 
   const avatarColor = getAvatarColor(email || displayName)
