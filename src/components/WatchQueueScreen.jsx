@@ -7,7 +7,7 @@ function getPosterColor(id) {
   return POSTER_COLORS[id % POSTER_COLORS.length]
 }
 
-export function WatchQueueScreen({ queue, onRemove, onToggleWatched, onGoToExplore, onGoToProfile }) {
+export function WatchQueueScreen({ queue, onRemove, onToggleWatched, onGoToExplore, onGoToProfile, onGoToHome }) {
   return (
     <div className="queue-screen">
       {/* Header */}
@@ -53,7 +53,7 @@ export function WatchQueueScreen({ queue, onRemove, onToggleWatched, onGoToExplo
 
       {/* Tab Bar */}
       <nav className="tab-bar">
-        <TabItem icon={<HomeIcon />} label="Home" onClick={onGoToExplore} />
+        <TabItem icon={<HomeIcon />} label="Home" onClick={onGoToHome} />
         <TabItem icon={<ExploreIcon />} label="Explore" onClick={onGoToExplore} />
         <TabItem icon={<SavedIcon />} label="Saved" active />
         <TabItem icon={<ProfileIcon />} label="Profile" onClick={onGoToProfile} />

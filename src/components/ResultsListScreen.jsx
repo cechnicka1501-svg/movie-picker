@@ -40,6 +40,7 @@ export function ResultsListScreen({
   onRemoveFromQueue,
   isInQueue,
   queueCount = 0,
+  onGoToHome,
 }) {
   const [skipped, setSkipped] = useState([])
   const activeChips = getActiveChips(filters)
@@ -152,7 +153,7 @@ export function ResultsListScreen({
 
       {/* Tab Bar */}
       <nav className="tab-bar">
-        <TabItem icon={<HomeIcon />} label="Home" onClick={onBack} />
+        <TabItem icon={<HomeIcon />} label="Home" onClick={onGoToHome} />
         <TabItem icon={<ExploreIcon />} label="Explore" active />
         <TabItem icon={<SavedIcon />} label="Saved" onClick={onGoToQueue} />
         <TabItem icon={<ProfileIcon />} label="Profile" onClick={onGoToProfile} />

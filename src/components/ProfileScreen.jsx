@@ -26,7 +26,7 @@ function getInitials(displayName, email) {
   return name[0].toUpperCase()
 }
 
-export function ProfileScreen({ user, queue, watchedHistory = [], onEdit, onGoToExplore, onGoToQueue }) {
+export function ProfileScreen({ user, queue, watchedHistory = [], onEdit, onGoToExplore, onGoToQueue, onGoToHome }) {
   const metadata = user?.user_metadata || {}
   const displayName = metadata.display_name || user?.email?.split('@')[0] || 'User'
   const username = metadata.username || null
@@ -105,7 +105,7 @@ export function ProfileScreen({ user, queue, watchedHistory = [], onEdit, onGoTo
 
       {/* Tab Bar */}
       <nav className="tab-bar">
-        <TabItem icon={<HomeIcon />} label="Home" onClick={onGoToExplore} />
+        <TabItem icon={<HomeIcon />} label="Home" onClick={onGoToHome} />
         <TabItem icon={<ExploreIcon />} label="Explore" onClick={onGoToExplore} />
         <TabItem icon={<SavedIcon />} label="Saved" onClick={onGoToQueue} />
         <TabItem icon={<ProfileIcon />} label="Profile" active />

@@ -12,12 +12,13 @@ import { WatchQueueScreen } from './components/WatchQueueScreen.jsx'
 import { ProfileScreen } from './components/ProfileScreen.jsx'
 import { EditProfileScreen } from './components/EditProfileScreen.jsx'
 import { ServicesSettingsScreen } from './components/ServicesSettingsScreen.jsx'
+import { HomeScreen } from './components/HomeScreen.jsx'
 
 // ─── Inner app — only rendered when user is known ────────────────────────────
 function AppContent() {
   const { user, loading: authLoading } = useAuth()
 
-  const [view, setView] = useState('filter') // 'filter' | 'result' | 'results' | 'queue' | 'profile' | 'editProfile' | 'settings'
+  const [view, setView] = useState('filter') // 'home' | 'filter' | 'result' | 'results' | 'queue' | 'profile' | 'editProfile' | 'settings'
   const [pickedMovie, setPickedMovie] = useState(null)
   const [filteredSet, setFilteredSet] = useState([])
   const [loading, setLoading] = useState(false)
@@ -94,6 +95,7 @@ function AppContent() {
   const handleGoToProfile  = useCallback(() => { setView('profile'); setError(null) }, [])
   const handleGoToEdit        = useCallback(() => { setView('editProfile') }, [])
   const handleBackFromEdit    = useCallback(() => { setView('profile') }, [])
+  const handleGoToHome        = useCallback(() => { setView('home');    setError(null) }, [])
   const handleGoToSettings    = useCallback(() => { setView('settings') }, [])
   const handleBackFromSettings = useCallback(() => { setView('filter') }, [])
 
@@ -123,6 +125,18 @@ function AppContent() {
   return (
     <div className="app-shell">
       <div className="phone-frame">
+        {view === 'home' && (
+          <HomeScreen
+            watchedHistory={watchedHistory}
+            queue={queue}
+            onSave={addToQueue}
+            isInQueue={isInQueue}
+            onGoToExplore={handleGoToExplore}
+            onGoToQueue={handleGoToQueue}
+            onGoToProfile={handleGoToProfile}
+            onGoToHome={handleGoToHome}
+          />
+        )}
         {view === 'filter' && (
           <FilterScreen
             filters={filters}
@@ -135,6 +149,7 @@ function AppContent() {
             onGoToQueue={handleGoToQueue}
             onGoToProfile={handleGoToProfile}
             onGoToSettings={handleGoToSettings}
+            onGoToHome={handleGoToHome}
             user={user}
           />
         )}
@@ -152,6 +167,7 @@ function AppContent() {
             isInQueue={isInQueue}
             onGoToQueue={handleGoToQueue}
             onGoToProfile={handleGoToProfile}
+            onGoToHome={handleGoToHome}
           />
         )}
         {view === 'results' && (
@@ -166,6 +182,7 @@ function AppContent() {
             onRemoveFromQueue={removeFromQueue}
             isInQueue={isInQueue}
             queueCount={queue.length}
+            onGoToHome={handleGoToHome}
           />
         )}
         {view === 'queue' && (
@@ -175,6 +192,7 @@ function AppContent() {
             onToggleWatched={toggleWatched}
             onGoToExplore={handleGoToExplore}
             onGoToProfile={handleGoToProfile}
+            onGoToHome={handleGoToHome}
           />
         )}
         {view === 'profile' && (
@@ -185,6 +203,7 @@ function AppContent() {
             onEdit={handleGoToEdit}
             onGoToExplore={handleGoToExplore}
             onGoToQueue={handleGoToQueue}
+            onGoToHome={handleGoToHome}
           />
         )}
         {view === 'editProfile' && (

@@ -21,7 +21,7 @@ const RATING_OPTIONS = [
   { label: 'Filmweb', value: 'filmweb' },
 ]
 
-export function FilterScreen({ filters, setters, clearAll, onGetPick, onShowResults, loading = false, error = null, onGoToQueue, onGoToProfile, onGoToSettings, user }) {
+export function FilterScreen({ filters, setters, clearAll, onGetPick, onShowResults, loading = false, error = null, onGoToQueue, onGoToProfile, onGoToSettings, onGoToHome, user }) {
   const { signOut } = useAuth()
   const {
     searchScope, selectedServices, includeTVAiring, moods, ratingSource,
@@ -181,7 +181,7 @@ export function FilterScreen({ filters, setters, clearAll, onGetPick, onShowResu
 
       {/* Tab Bar */}
       <nav className="tab-bar">
-        <TabItem icon={<HomeIcon />} label="Home" />
+        <TabItem icon={<HomeIcon />} label="Home" onClick={onGoToHome} />
         <TabItem icon={<ExploreIcon />} label="Explore" active />
         <TabItem icon={<SavedIcon />} label="Saved" onClick={onGoToQueue} />
         <TabItem icon={<ProfileIcon />} label="Profile" onClick={onGoToProfile} />

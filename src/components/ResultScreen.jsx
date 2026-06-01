@@ -42,7 +42,7 @@ function buildWhyThisPick(movie, filters) {
   return reasons
 }
 
-export function ResultScreen({ movie, filters, onPickAgain, onBack, onClearAndBack, loading = false, error = null, onSave, onRemoveFromQueue, isInQueue, onGoToQueue, onGoToProfile }) {
+export function ResultScreen({ movie, filters, onPickAgain, onBack, onClearAndBack, loading = false, error = null, onSave, onRemoveFromQueue, isInQueue, onGoToQueue, onGoToProfile, onGoToHome }) {
   if (!movie) {
     return (
       <div className="result-screen result-screen--empty">
@@ -58,7 +58,7 @@ export function ResultScreen({ movie, filters, onPickAgain, onBack, onClearAndBa
           </button>
         </div>
         <nav className="tab-bar">
-          <TabItem icon={<HomeIcon />} label="Home" />
+          <TabItem icon={<HomeIcon />} label="Home" onClick={onGoToHome} />
           <TabItem icon={<ExploreIcon />} label="Explore" active />
           <TabItem icon={<SavedIcon />} label="Saved" onClick={onGoToQueue} />
           <TabItem icon={<ProfileIcon />} label="Profile" onClick={onGoToProfile} />
