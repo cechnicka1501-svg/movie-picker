@@ -20,7 +20,7 @@ function AppContent() {
   const [error, setError] = useState(null)
 
   const { filters, setters, clearAll } = useFilterState()
-  const { queue, addToQueue, removeFromQueue, isInQueue, toggleWatched } = useWatchQueue()
+  const { queue, addToQueue, removeFromQueue, isInQueue, toggleWatched } = useWatchQueue(user?.id)
 
   const handleGetPick = useCallback(async () => {
     setLoading(true)
