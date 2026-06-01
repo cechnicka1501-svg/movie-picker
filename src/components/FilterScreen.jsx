@@ -22,7 +22,7 @@ const RATING_OPTIONS = [
   { label: 'Filmweb', value: 'filmweb' },
 ]
 
-export function FilterScreen({ filters, setters, clearAll, onGetPick, loading = false, error = null }) {
+export function FilterScreen({ filters, setters, clearAll, onGetPick, loading = false, error = null, onGoToQueue }) {
   const { signOut } = useAuth()
   const {
     searchScope, selectedServices, includeTVAiring, moods, ratingSource,
@@ -168,20 +168,25 @@ export function FilterScreen({ filters, setters, clearAll, onGetPick, loading = 
         </button>
       </div>
 
-      {/* Decorative Tab Bar */}
+      {/* Tab Bar */}
       <nav className="tab-bar">
         <TabItem icon={<HomeIcon />} label="Home" />
         <TabItem icon={<ExploreIcon />} label="Explore" active />
-        <TabItem icon={<SavedIcon />} label="Saved" />
+        <TabItem icon={<SavedIcon />} label="Saved" onClick={onGoToQueue} />
         <TabItem icon={<ProfileIcon />} label="Profile" />
       </nav>
     </div>
   )
 }
 
-function TabItem({ icon, label, active }) {
+function TabItem({ icon, label, active, onClick }) {
   return (
-    <div className={`tab-item${active ? ' tab-item--active' : ''}`}>
+    <div
+      className={`tab-item${active ? ' tab-item--active' : ''}${onClick ? ' tab-item--clickable' : ''}`}
+      onClick={onClick}
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
+    >
       {icon}
       <span>{label}</span>
     </div>

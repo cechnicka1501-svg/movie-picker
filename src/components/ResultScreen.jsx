@@ -42,7 +42,7 @@ function buildWhyThisPick(movie, filters) {
   return reasons
 }
 
-export function ResultScreen({ movie, filters, onPickAgain, onBack, onClearAndBack, loading = false, error = null }) {
+export function ResultScreen({ movie, filters, onPickAgain, onBack, onClearAndBack, loading = false, error = null, onSave, onRemoveFromQueue, isInQueue, onGoToQueue }) {
   if (!movie) {
     return (
       <div className="result-screen result-screen--empty">
@@ -60,7 +60,7 @@ export function ResultScreen({ movie, filters, onPickAgain, onBack, onClearAndBa
         <nav className="tab-bar">
           <TabItem icon={<HomeIcon />} label="Home" />
           <TabItem icon={<ExploreIcon />} label="Explore" active />
-          <TabItem icon={<SavedIcon />} label="Saved" />
+          <TabItem icon={<SavedIcon />} label="Saved" onClick={onGoToQueue} />
           <TabItem icon={<ProfileIcon />} label="Profile" />
         </nav>
       </div>
@@ -70,6 +70,7 @@ export function ResultScreen({ movie, filters, onPickAgain, onBack, onClearAndBa
   const ratingValue = filters.ratingSource === 'imdb' ? movie.ratingIMDb : movie.ratingFilmweb
   const ratingLabel = filters.ratingSource === 'imdb' ? 'IMDb' : 'Filmweb'
   const whyReasons = buildWhyThisPick(movie, filters)
+  const saved = isInQueue && isInQueue(movie.id)
 
   return (
     <div className="result-screen">
@@ -144,26 +145,38 @@ export function ResultScreen({ movie, filters, onPickAgain, onBack, onClearAndBa
           >
             {loading ? <span className="spinner" /> : 'Pick again'}
           </button>
+          <button
+            type="button"
+            className={`btn ${saved ? 'btn--saved' : 'btn--save'}`}
+            onClick={() => saved ? onRemoveFromQueue(movie.id) : onSave(movie, filters.ratingSource)}
+          >
+            {saved ? '✓ Saved' : 'Save to Watch Queue'}
+          </button>
           <button type="button" className="btn btn--ghost" onClick={onBack}>
             Back to filters
           </button>
         </div>
       </div>
 
-      {/* Decorative Tab Bar */}
+      {/* Tab Bar */}
       <nav className="tab-bar">
         <TabItem icon={<HomeIcon />} label="Home" />
         <TabItem icon={<ExploreIcon />} label="Explore" active />
-        <TabItem icon={<SavedIcon />} label="Saved" />
+        <TabItem icon={<SavedIcon />} label="Saved" onClick={onGoToQueue} />
         <TabItem icon={<ProfileIcon />} label="Profile" />
       </nav>
     </div>
   )
 }
 
-function TabItem({ icon, label, active }) {
+function TabItem({ icon, label, active, onClick }) {
   return (
-    <div className={`tab-item${active ? ' tab-item--active' : ''}`}>
+    <div
+      className={`tab-item${active ? ' tab-item--active' : ''}${onClick ? ' tab-item--clickable' : ''}`}
+      onClick={onClick}
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
+    >
       {icon}
       <span>{label}</span>
     </div>
