@@ -11,12 +11,13 @@ import { ResultsListScreen } from './components/ResultsListScreen.jsx'
 import { WatchQueueScreen } from './components/WatchQueueScreen.jsx'
 import { ProfileScreen } from './components/ProfileScreen.jsx'
 import { EditProfileScreen } from './components/EditProfileScreen.jsx'
+import { ServicesSettingsScreen } from './components/ServicesSettingsScreen.jsx'
 
 // ─── Inner app — only rendered when user is known ────────────────────────────
 function AppContent() {
   const { user, loading: authLoading } = useAuth()
 
-  const [view, setView] = useState('filter') // 'filter' | 'result' | 'results' | 'queue' | 'profile' | 'editProfile'
+  const [view, setView] = useState('filter') // 'filter' | 'result' | 'results' | 'queue' | 'profile' | 'editProfile' | 'settings'
   const [pickedMovie, setPickedMovie] = useState(null)
   const [filteredSet, setFilteredSet] = useState([])
   const [loading, setLoading] = useState(false)
@@ -91,8 +92,10 @@ function AppContent() {
   const handleGoToQueue    = useCallback(() => { setView('queue');   setError(null) }, [])
   const handleGoToExplore  = useCallback(() => { setView('filter');  setError(null) }, [])
   const handleGoToProfile  = useCallback(() => { setView('profile'); setError(null) }, [])
-  const handleGoToEdit     = useCallback(() => { setView('editProfile') }, [])
-  const handleBackFromEdit = useCallback(() => { setView('profile') }, [])
+  const handleGoToEdit        = useCallback(() => { setView('editProfile') }, [])
+  const handleBackFromEdit    = useCallback(() => { setView('profile') }, [])
+  const handleGoToSettings    = useCallback(() => { setView('settings') }, [])
+  const handleBackFromSettings = useCallback(() => { setView('filter') }, [])
 
   // While Supabase checks the session, show a spinner
   if (authLoading) {
@@ -131,6 +134,8 @@ function AppContent() {
             error={error}
             onGoToQueue={handleGoToQueue}
             onGoToProfile={handleGoToProfile}
+            onGoToSettings={handleGoToSettings}
+            user={user}
           />
         )}
         {view === 'result' && (
@@ -186,6 +191,12 @@ function AppContent() {
           <EditProfileScreen
             user={user}
             onBack={handleBackFromEdit}
+          />
+        )}
+        {view === 'settings' && (
+          <ServicesSettingsScreen
+            user={user}
+            onBack={handleBackFromSettings}
           />
         )}
       </div>

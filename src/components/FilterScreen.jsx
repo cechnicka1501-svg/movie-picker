@@ -4,8 +4,7 @@ import { RangeSlider } from './ui/RangeSlider.jsx'
 import { Toggle } from './ui/Toggle.jsx'
 import { YearRange } from './ui/YearRange.jsx'
 import { useAuth } from './AuthProvider.jsx'
-
-const SERVICES = ['StreamFlix', 'WatchNow', 'CineStream', 'ViewHub']
+import { SERVICES as SERVICE_LIST, DEFAULT_SERVICES } from '../data/services.js'
 const MOODS = ['Chill', 'Funny', 'Feel-good', 'Romantic', 'Cozy', 'Dark', 'Intense', 'Scary', 'Inspiring', 'Thoughtful', 'Adventure', 'Surprise me']
 const GENRES = ['Drama', 'Comedy', 'Thriller', 'Romance', 'Sci-Fi', 'Horror', 'Action', 'Documentary']
 const RUNTIME_OPTIONS = [
@@ -22,12 +21,19 @@ const RATING_OPTIONS = [
   { label: 'Filmweb', value: 'filmweb' },
 ]
 
-export function FilterScreen({ filters, setters, clearAll, onGetPick, onShowResults, loading = false, error = null, onGoToQueue, onGoToProfile }) {
+export function FilterScreen({ filters, setters, clearAll, onGetPick, onShowResults, loading = false, error = null, onGoToQueue, onGoToProfile, onGoToSettings, user }) {
   const { signOut } = useAuth()
   const {
     searchScope, selectedServices, includeTVAiring, moods, ratingSource,
     minRating, yearFrom, yearTo, runtime, genres, keywords, hideWatched,
   } = filters
+
+  // Use subscribed services from user_metadata, fall back to defaults
+  const userServiceIds = user?.user_metadata?.services ?? DEFAULT_SERVICES
+  // In myServices mode show only subscribed services; in allPlatforms show all
+  const visibleServices = searchScope === 'allPlatforms'
+    ? SERVICE_LIST
+    : SERVICE_LIST.filter((s) => userServiceIds.includes(s.id))
 
   return (
     <div className="filter-screen">
@@ -38,7 +44,7 @@ export function FilterScreen({ filters, setters, clearAll, onGetPick, onShowResu
           <p className="filter-header__subtitle">We'll tailor the choice to your context.</p>
         </div>
         <div className="header-icons">
-          <button type="button" className="icon-btn" aria-label="Settings">
+          <button type="button" className="icon-btn" aria-label="Settings" onClick={onGoToSettings}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="3" />
               <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
@@ -61,18 +67,21 @@ export function FilterScreen({ filters, setters, clearAll, onGetPick, onShowResu
           <SegmentedToggle options={SCOPE_OPTIONS} value={searchScope} onChange={setters.setSearchScope} />
           <p className="helper-text">Searching in: Your subscriptions (+ optional TV)</p>
           <div className="chip-group">
-            {SERVICES.map((s) => (
+            {visibleServices.map((svc) => (
               <Chip
-                key={s}
-                label={s}
-                selected={selectedServices.includes(s)}
-                onClick={() => setters.toggleService(s)}
+                key={svc.id}
+                label={svc.name}
+                selected={selectedServices.includes(svc.id)}
+                onClick={() => setters.toggleService(svc.id)}
                 disabled={searchScope === 'allPlatforms'}
               />
             ))}
+            {visibleServices.length === 0 && searchScope === 'myServices' && (
+              <p className="helper-text" style={{ margin: 0 }}>No services added yet.</p>
+            )}
           </div>
           <Toggle label="Include TV airing" checked={includeTVAiring} onChange={setters.setIncludeTVAiring} />
-          <button type="button" className="text-action">Edit services</button>
+          <button type="button" className="text-action" onClick={onGoToSettings}>Edit services</button>
         </div>
 
         {/* Mood + Rating Source */}
