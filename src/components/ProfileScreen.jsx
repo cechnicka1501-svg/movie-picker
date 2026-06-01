@@ -67,13 +67,13 @@ export function ProfileScreen({ user, queue, onEdit, onGoToExplore, onGoToQueue 
       {/* Body */}
       <div className="profile-body">
         {/* Identity */}
-        <div className="profile-identity">
+        <div className="card profile-identity">
           <div className="profile-avatar" style={{ backgroundColor: avatarColor }}>
             <span className="profile-avatar__initials">{initials}</span>
           </div>
           <h2 className="profile-display-name">{displayName}</h2>
           {username && <p className="profile-username">@{username}</p>}
-          <button type="button" className="btn btn--primary profile-edit-btn" onClick={onEdit}>
+          <button type="button" className="btn btn--primary" onClick={onEdit}>
             Edit profile
           </button>
         </div>
