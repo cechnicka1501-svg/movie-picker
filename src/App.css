@@ -2047,6 +2047,102 @@ input {
   color: #2D1F2D;
 }
 
+/* Legal footer on auth screen */
+.auth-legal {
+  margin-top: 14px;
+  font-size: 0.75rem;
+  color: #B0A498;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.auth-legal-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: #8A7E74;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+}
+
+.auth-legal-link:hover {
+  color: #2D1F2D;
+}
+
+/* ─── Legal Screen ───────────────────────────────────────────────────────────── */
+.legal-screen {
+  /* layout owned by .screen */
+}
+
+.legal-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 14px 10px;
+  flex-shrink: 0;
+}
+
+.legal-header__back {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #2D1F2D;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.legal-header__back:hover {
+  background: #EDE9E3;
+}
+
+.legal-header__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2D1F2D;
+  margin: 0;
+}
+
+.legal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 14px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.legal-body::-webkit-scrollbar {
+  display: none;
+}
+
+.legal-heading {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #2D1F2D;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.legal-heading:first-child {
+  margin-top: 0;
+}
+
+.legal-paragraph {
+  font-size: 0.85rem;
+  color: #5A4E46;
+  line-height: 1.65;
+  margin: 0;
+}
+
 /* Guest prompt screen (shown when guest taps Saved or Profile) */
 .guest-prompt-screen {
   /* layout owned by .screen */
