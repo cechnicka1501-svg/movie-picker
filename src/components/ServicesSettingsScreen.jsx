@@ -74,7 +74,7 @@ export function ServicesSettingsScreen({ user, onBack }) {
   }
 
   return (
-    <div className="settings-screen">
+    <div className="screen settings-screen">
       {/* Header */}
       <div className="settings-header">
         <button type="button" className="settings-header__back" onClick={onBack} aria-label="Back">

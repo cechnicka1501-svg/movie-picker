@@ -47,7 +47,7 @@ export function EditProfileScreen({ user, onBack }) {
   }
 
   return (
-    <div className="edit-profile-screen">
+    <div className="screen edit-profile-screen">
       {/* Header */}
       <div className="edit-profile-header">
         <button type="button" className="back-btn" onClick={onBack}>

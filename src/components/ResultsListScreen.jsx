@@ -49,7 +49,7 @@ export function ResultsListScreen({
   const visibleMovies = movies.filter((m) => !skipped.includes(m.id))
 
   return (
-    <div className="results-screen">
+    <div className="screen results-screen">
       {/* Header */}
       <div className="results-header">
         <div className="results-header__top">

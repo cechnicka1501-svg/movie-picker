@@ -56,7 +56,7 @@ export function HomeScreen({
   }, [hasHistory]) // Re-run when user gains/loses watch history
 
   return (
-    <div className="home-screen">
+    <div className="screen home-screen">
       {/* Header */}
       <div className="home-header">
         <div className="home-header__text">

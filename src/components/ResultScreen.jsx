@@ -45,7 +45,7 @@ function buildWhyThisPick(movie, filters) {
 export function ResultScreen({ movie, filters, onPickAgain, onBack, onClearAndBack, loading = false, error = null, onSave, onRemoveFromQueue, isInQueue, onGoToQueue, onGoToProfile, onGoToHome }) {
   if (!movie) {
     return (
-      <div className="result-screen result-screen--empty">
+      <div className="screen result-screen result-screen--empty">
         <div className="no-results">
           <div className="no-results__icon">🎬</div>
           <h2 className="no-results__title">No movies match your filters</h2>
@@ -73,7 +73,7 @@ export function ResultScreen({ movie, filters, onPickAgain, onBack, onClearAndBa
   const saved = isInQueue && isInQueue(movie.id)
 
   return (
-    <div className="result-screen">
+    <div className="screen result-screen">
       <div className="result-body">
         {/* Back link */}
         <button type="button" className="back-btn" onClick={onBack}>

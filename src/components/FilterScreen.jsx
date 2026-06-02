@@ -36,7 +36,7 @@ export function FilterScreen({ filters, setters, clearAll, onGetPick, onShowResu
     : SERVICE_LIST.filter((s) => userServiceIds.includes(s.id))
 
   return (
-    <div className="filter-screen">
+    <div className="screen filter-screen">
       {/* Header */}
       <div className="filter-header">
         <div className="filter-header__text">

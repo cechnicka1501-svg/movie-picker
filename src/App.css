@@ -43,19 +43,28 @@ input {
     0 32px 80px rgba(0,0,0,0.28),
     0 8px 24px rgba(0,0,0,0.14);
   overflow: hidden;
-  min-height: 844px;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
-/* ─── Filter Screen ─────────────────────────────────────────────────────────── */
-.filter-screen {
+/* Shared wrapper used by every screen — owns all container geometry */
+.screen {
   display: flex;
   flex-direction: column;
-  flex: 1;
   width: 100%;
+  max-width: 390px;
+  min-height: 100vh;
+  margin: 0 auto;
+  flex: 1;
+  background: #FAF8F5;
   overflow: hidden;
+}
+
+/* ─── Filter Screen ─────────────────────────────────────────────────────────── */
+.filter-screen {
+  /* layout owned by .screen */
 }
 
 .filter-header {
@@ -491,11 +500,7 @@ input {
 
 /* ─── Result Screen ─────────────────────────────────────────────────────────── */
 .result-screen {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  width: 100%;
-  overflow: hidden;
+  /* layout owned by .screen */
 }
 
 .result-body {
@@ -638,12 +643,10 @@ input {
 
 /* ─── Auth Screen ───────────────────────────────────────────────────────────── */
 .auth-screen {
-  flex: 1;
-  display: flex;
+  /* layout owned by .screen; keep inner-card centering */
   align-items: center;
   justify-content: center;
   padding: 40px 24px 32px;
-  background: #FAF8F5;
 }
 
 .auth-card {
@@ -938,12 +941,7 @@ input {
 
 /* ─── Watch Queue Screen ────────────────────────────────────────────────────── */
 .queue-screen {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  width: 100%;
-  overflow: hidden;
-  background: #FAF8F5;
+  /* layout owned by .screen */
 }
 
 .queue-header {
@@ -1147,12 +1145,7 @@ input {
 
 /* ─── Results List Screen ───────────────────────────────────────────────────── */
 .results-screen {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  width: 100%;
-  overflow: hidden;
-  background: #FAF8F5;
+  /* layout owned by .screen */
 }
 
 .results-header {
@@ -1452,12 +1445,7 @@ input {
 
 /* ─── Profile Screen ────────────────────────────────────────────────────────── */
 .profile-screen {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  width: 100%;
-  overflow: hidden;
-  background: #FAF8F5;
+  /* layout owned by .screen */
 }
 
 .profile-header {
@@ -1679,12 +1667,7 @@ input {
 
 /* ─── Edit Profile Screen ───────────────────────────────────────────────────── */
 .edit-profile-screen {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  width: 100%;
-  overflow: hidden;
-  background: #FAF8F5;
+  /* layout owned by .screen */
 }
 
 .edit-profile-header {
@@ -1766,12 +1749,7 @@ input {
 
 /* ─── Settings Screen ─────────────────────────────────────────────────────── */
 .settings-screen {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  flex: 1;
-  background: #FAF8F5;
-  overflow: hidden;
+  /* layout owned by .screen */
 }
 
 .settings-header {
@@ -1865,12 +1843,7 @@ input {
 
 /* ─── Home Screen ─────────────────────────────────────────────────────────── */
 .home-screen {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  flex: 1;
-  background: #FAF8F5;
-  overflow: hidden;
+  /* layout owned by .screen */
 }
 
 .home-header {

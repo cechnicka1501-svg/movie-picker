@@ -43,7 +43,7 @@ export function ProfileScreen({ user, queue, watchedHistory = [], onEdit, onGoTo
   const initials = getInitials(metadata.display_name, email)
 
   return (
-    <div className="profile-screen">
+    <div className="screen profile-screen">
       {/* Header */}
       <div className="profile-header">
         <h1 className="profile-header__title">My Profile</h1>

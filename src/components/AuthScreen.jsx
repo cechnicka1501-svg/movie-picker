@@ -47,7 +47,7 @@ export function AuthScreen() {
   }
 
   return (
-    <div className="auth-screen">
+    <div className="screen auth-screen">
       <div className="auth-card">
         {/* Logo */}
         <div className="auth-logo">

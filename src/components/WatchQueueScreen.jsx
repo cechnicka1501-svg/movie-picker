@@ -9,7 +9,7 @@ function getPosterColor(id) {
 
 export function WatchQueueScreen({ queue, onRemove, onToggleWatched, onGoToExplore, onGoToProfile, onGoToHome }) {
   return (
-    <div className="queue-screen">
+    <div className="screen queue-screen">
       {/* Header */}
       <div className="queue-header">
         <div className="queue-header__text">
