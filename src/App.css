@@ -2024,3 +2024,72 @@ input {
   background: transparent;
   color: #C4614A;
 }
+
+/* ─── Guest Mode ─────────────────────────────────────────────────────────────── */
+
+/* "Browse as guest" link on auth screen */
+.auth-guest-link {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  font-size: 0.83rem;
+  color: #A09488;
+  text-align: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s;
+}
+
+.auth-guest-link:hover {
+  color: #2D1F2D;
+}
+
+/* Guest prompt screen (shown when guest taps Saved or Profile) */
+.guest-prompt-screen {
+  /* layout owned by .screen */
+}
+
+.guest-prompt__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 48px 32px;
+  text-align: center;
+}
+
+.guest-prompt__icon {
+  font-size: 3rem;
+}
+
+.guest-prompt__title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #2D1F2D;
+  margin: 0;
+}
+
+.guest-prompt__hint {
+  font-size: 0.9rem;
+  color: #8A7E74;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 260px;
+}
+
+/* Inline "Sign in to save" message below save buttons */
+.guest-save-msg {
+  font-size: 0.72rem;
+  color: #C4614A;
+  margin-top: 5px;
+}
+
+.guest-save-msg--center {
+  text-align: center;
+}
+

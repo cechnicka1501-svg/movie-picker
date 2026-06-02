@@ -4,8 +4,9 @@ import { supabase } from '../lib/supabase.js'
 const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null)
+  const [user, setUser]       = useState(null)
   const [loading, setLoading] = useState(true)
+  const [isGuest, setIsGuest] = useState(false)
 
   useEffect(() => {
     // Get current session on mount
@@ -16,7 +17,10 @@ export function AuthProvider({ children }) {
 
     // Listen for login / logout / token refresh
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
+      const nextUser = session?.user ?? null
+      setUser(nextUser)
+      // Auto-exit guest mode when a real account signs in
+      if (nextUser) setIsGuest(false)
     })
 
     return () => subscription.unsubscribe()
@@ -26,8 +30,11 @@ export function AuthProvider({ children }) {
     await supabase.auth.signOut()
   }
 
+  function enterGuestMode() { setIsGuest(true) }
+  function exitGuestMode()  { setIsGuest(false) }
+
   return (
-    <AuthContext.Provider value={{ user, loading, signOut }}>
+    <AuthContext.Provider value={{ user, loading, signOut, isGuest, enterGuestMode, exitGuestMode }}>
       {children}
     </AuthContext.Provider>
   )

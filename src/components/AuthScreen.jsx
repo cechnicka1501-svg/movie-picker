@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase.js'
+import { useAuth } from './AuthProvider.jsx'
 
 export function AuthScreen() {
+  const { enterGuestMode } = useAuth()
   const [mode, setMode] = useState('login') // 'login' | 'register'
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -122,6 +124,10 @@ export function AuthScreen() {
             </>
           )}
         </p>
+
+        <button type="button" className="auth-guest-link" onClick={enterGuestMode}>
+          Browse as guest
+        </button>
       </div>
     </div>
   )

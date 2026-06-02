@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Chip } from './ui/Chip.jsx'
 
 const POSTER_COLORS = [
@@ -42,7 +43,7 @@ function buildWhyThisPick(movie, filters) {
   return reasons
 }
 
-export function ResultScreen({ movie, filters, onPickAgain, onBack, onClearAndBack, loading = false, error = null, onSave, onRemoveFromQueue, isInQueue, onGoToQueue, onGoToProfile, onGoToHome }) {
+export function ResultScreen({ movie, filters, onPickAgain, onBack, onClearAndBack, loading = false, error = null, onSave, onRemoveFromQueue, isInQueue, onGoToQueue, onGoToProfile, onGoToHome, isGuest = false }) {
   if (!movie) {
     return (
       <div className="screen result-screen result-screen--empty">
@@ -67,10 +68,20 @@ export function ResultScreen({ movie, filters, onPickAgain, onBack, onClearAndBa
     )
   }
 
+  const [guestMsg, setGuestMsg] = useState(false)
   const ratingValue = filters.ratingSource === 'imdb' ? movie.ratingIMDb : movie.ratingFilmweb
   const ratingLabel = filters.ratingSource === 'imdb' ? 'IMDb' : 'Filmweb'
   const whyReasons = buildWhyThisPick(movie, filters)
   const saved = isInQueue && isInQueue(movie.id)
+
+  function handleSave() {
+    if (isGuest) {
+      setGuestMsg(true)
+      setTimeout(() => setGuestMsg(false), 2500)
+      return
+    }
+    onSave(movie, filters.ratingSource)
+  }
 
   return (
     <div className="screen result-screen">
@@ -148,10 +159,11 @@ export function ResultScreen({ movie, filters, onPickAgain, onBack, onClearAndBa
           <button
             type="button"
             className={`btn ${saved ? 'btn--saved' : 'btn--save'}`}
-            onClick={() => saved ? onRemoveFromQueue(movie.id) : onSave(movie, filters.ratingSource)}
+            onClick={() => saved ? onRemoveFromQueue(movie.id) : handleSave()}
           >
             {saved ? '✓ Saved' : 'Save to Watch Queue'}
           </button>
+          {guestMsg && <p className="guest-save-msg guest-save-msg--center">Sign in to save movies</p>}
           <button type="button" className="btn btn--ghost" onClick={onBack}>
             Back to filters
           </button>

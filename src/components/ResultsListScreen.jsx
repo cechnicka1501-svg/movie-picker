@@ -41,6 +41,7 @@ export function ResultsListScreen({
   isInQueue,
   queueCount = 0,
   onGoToHome,
+  isGuest = false,
 }) {
   const [skipped, setSkipped] = useState([])
   const activeChips = getActiveChips(filters)
@@ -130,6 +131,7 @@ export function ResultsListScreen({
                 onSave={() => onSave(movie, ratingSource)}
                 onRemove={() => onRemoveFromQueue(movie.id)}
                 onSkip={() => setSkipped((prev) => [...prev, movie.id])}
+                isGuest={isGuest}
               />
             ))}
           </div>
@@ -162,9 +164,19 @@ export function ResultsListScreen({
   )
 }
 
-function MovieCard({ movie, ratingSource, firstMood, saved, onSave, onRemove, onSkip }) {
+function MovieCard({ movie, ratingSource, firstMood, saved, onSave, onRemove, onSkip, isGuest }) {
+  const [guestMsg, setGuestMsg] = useState(false)
   const rating = ratingSource === 'filmweb' ? movie.ratingFilmweb : movie.ratingIMDb
   const displayGenres = (movie.genres || []).slice(0, 3)
+
+  function handleSave() {
+    if (isGuest) {
+      setGuestMsg(true)
+      setTimeout(() => setGuestMsg(false), 2500)
+      return
+    }
+    onSave()
+  }
 
   return (
     <div className="results-card">
@@ -205,13 +217,14 @@ function MovieCard({ movie, ratingSource, firstMood, saved, onSave, onRemove, on
           <button
             type="button"
             className={`results-card__save-btn${saved ? ' results-card__save-btn--saved' : ''}`}
-            onClick={saved ? onRemove : onSave}
+            onClick={saved ? onRemove : handleSave}
           >
             {saved ? '✓ Saved' : 'Save'}
           </button>
           <button type="button" className="results-card__skip-btn" onClick={onSkip}>
             Skip
           </button>
+          {guestMsg && <p className="guest-save-msg">Sign in to save movies</p>}
         </div>
       </div>
     </div>

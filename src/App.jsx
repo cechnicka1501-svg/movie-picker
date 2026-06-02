@@ -13,10 +13,11 @@ import { ProfileScreen } from './components/ProfileScreen.jsx'
 import { EditProfileScreen } from './components/EditProfileScreen.jsx'
 import { ServicesSettingsScreen } from './components/ServicesSettingsScreen.jsx'
 import { HomeScreen } from './components/HomeScreen.jsx'
+import { GuestPromptScreen } from './components/GuestPromptScreen.jsx'
 
 // ─── Inner app — only rendered when user is known ────────────────────────────
 function AppContent() {
-  const { user, loading: authLoading } = useAuth()
+  const { user, loading: authLoading, isGuest } = useAuth()
 
   const [view, setView] = useState('filter') // 'home' | 'filter' | 'result' | 'results' | 'queue' | 'profile' | 'editProfile' | 'settings'
   const [pickedMovie, setPickedMovie] = useState(null)
@@ -90,9 +91,9 @@ function AppContent() {
     setError(null)
   }, [clearAll])
 
-  const handleGoToQueue    = useCallback(() => { setView('queue');   setError(null) }, [])
+  const handleGoToQueue    = useCallback(() => { setView(isGuest ? 'guestPrompt' : 'queue');   setError(null) }, [isGuest])
   const handleGoToExplore  = useCallback(() => { setView('filter');  setError(null) }, [])
-  const handleGoToProfile  = useCallback(() => { setView('profile'); setError(null) }, [])
+  const handleGoToProfile  = useCallback(() => { setView(isGuest ? 'guestPrompt' : 'profile'); setError(null) }, [isGuest])
   const handleGoToEdit        = useCallback(() => { setView('editProfile') }, [])
   const handleBackFromEdit    = useCallback(() => { setView('profile') }, [])
   const handleGoToHome        = useCallback(() => { setView('home');    setError(null) }, [])
@@ -110,8 +111,8 @@ function AppContent() {
     )
   }
 
-  // Not logged in → show auth screen
-  if (!user) {
+  // Not logged in and not guest → show auth screen
+  if (!user && !isGuest) {
     return (
       <div className="app-shell">
         <div className="phone-frame">
@@ -168,6 +169,7 @@ function AppContent() {
             onGoToQueue={handleGoToQueue}
             onGoToProfile={handleGoToProfile}
             onGoToHome={handleGoToHome}
+            isGuest={isGuest}
           />
         )}
         {view === 'results' && (
@@ -183,6 +185,7 @@ function AppContent() {
             isInQueue={isInQueue}
             queueCount={queue.length}
             onGoToHome={handleGoToHome}
+            isGuest={isGuest}
           />
         )}
         {view === 'queue' && (
@@ -216,6 +219,14 @@ function AppContent() {
           <ServicesSettingsScreen
             user={user}
             onBack={handleBackFromSettings}
+          />
+        )}
+        {view === 'guestPrompt' && (
+          <GuestPromptScreen
+            onGoToHome={handleGoToHome}
+            onGoToExplore={handleGoToExplore}
+            onGoToQueue={handleGoToQueue}
+            onGoToProfile={handleGoToProfile}
           />
         )}
       </div>
