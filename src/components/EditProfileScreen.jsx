@@ -26,6 +26,45 @@ export function EditProfileScreen({ user, onBack }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+  const [deleteError, setDeleteError] = useState(null)
+
+  async function handleDeleteAccount() {
+    setDeleting(true)
+    setDeleteError(null)
+
+    try {
+      // 1. Delete all user data from watch_queue
+      await supabase
+        .from('watch_queue')
+        .delete()
+        .eq('user_id', user.id)
+
+      // 2. Delete the auth account via a SECURITY DEFINER PostgreSQL function.
+      //    (supabase.auth.admin.deleteUser requires service-role key — not safe client-side)
+      //    Run the SQL below in Supabase dashboard once to enable this:
+      //
+      //    CREATE OR REPLACE FUNCTION public.delete_user()
+      //    RETURNS void LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
+      //    BEGIN DELETE FROM auth.users WHERE id = auth.uid(); END; $$;
+      //
+      //    GRANT EXECUTE ON FUNCTION public.delete_user() TO authenticated;
+      const { error: rpcError } = await supabase.rpc('delete_user')
+      if (rpcError) throw rpcError
+
+      // 3. Sign out (triggers AuthProvider → app returns to auth screen)
+      await supabase.auth.signOut()
+    } catch (err) {
+      setDeleteError(
+        err?.message?.includes('delete_user')
+          ? 'Funkcja usuwania konta nie jest skonfigurowana. Skontaktuj się z administratorem.'
+          : (err?.message || 'Nie udało się usunąć konta. Spróbuj ponownie.')
+      )
+      setDeleting(false)
+    }
+  }
+
   const avatarColor = getAvatarColor(email || displayName)
   const initials = getInitials(
     displayName || metadata.display_name,
@@ -110,7 +149,47 @@ export function EditProfileScreen({ user, onBack }) {
         >
           {loading ? <span className="spinner" /> : 'Save'}
         </button>
+
+        <button
+          type="button"
+          className="delete-account-btn"
+          onClick={() => { setDeleteError(null); setShowDeleteConfirm(true) }}
+          disabled={loading}
+        >
+          Usuń konto
+        </button>
       </div>
+
+      {/* Delete confirmation overlay */}
+      {showDeleteConfirm && (
+        <div className="confirm-overlay">
+          <div className="confirm-dialog">
+            <h2 className="confirm-dialog__title">Usuń konto</h2>
+            <p className="confirm-dialog__message">
+              Czy na pewno chcesz usunąć konto? Ta operacja jest nieodwracalna.
+            </p>
+            {deleteError && <p className="confirm-dialog__error">{deleteError}</p>}
+            <div className="confirm-dialog__actions">
+              <button
+                type="button"
+                className="btn btn--ghost"
+                onClick={() => setShowDeleteConfirm(false)}
+                disabled={deleting}
+              >
+                Anuluj
+              </button>
+              <button
+                type="button"
+                className={`btn btn--destructive${deleting ? ' btn--loading' : ''}`}
+                onClick={handleDeleteAccount}
+                disabled={deleting}
+              >
+                {deleting ? <span className="spinner" /> : 'Usuń konto'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
