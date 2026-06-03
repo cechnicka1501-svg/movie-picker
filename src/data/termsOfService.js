@@ -1,89 +1,101 @@
 export const termsOfService = `
-## Regulamin StreamLens
+## Terms of Service
 
-Ostatnia aktualizacja: 1 czerwca 2025 r.
+Last updated: June 1, 2025
 
-Niniejszy Regulamin określa zasady korzystania z aplikacji StreamLens. Korzystając z aplikacji, akceptujesz jego postanowienia. Jeżeli się z nimi nie zgadzasz, nie korzystaj z aplikacji.
-
-
-## Czym jest StreamLens
-
-StreamLens to aplikacja do odkrywania filmów, umożliwiająca przeglądanie rekomendacji, zapisywanie filmów do kolejki oglądania i śledzenie historii obejrzanych filmów.
-
-Dane o filmach (tytuły, opisy, plakaty, oceny) pochodzą z zewnętrznego serwisu TMDB (The Movie Database, themoviedb.org). StreamLens nie jest afiliowany z TMDB ani nie ponosi odpowiedzialności za treści dostarczane przez ten serwis.
+These Terms of Service govern your use of the StreamLens application. By using the app, you accept these terms. If you do not agree with them, please do not use the app.
 
 
-## Konto użytkownika
+## What StreamLens Is
 
-Aby korzystać z pełnej funkcjonalności aplikacji, konieczne jest założenie konta. Rejestrując się, zobowiązujesz się do:
+StreamLens is a movie discovery app that lets you browse recommendations, save movies to a watch queue, and track your watch history.
 
-- podania prawdziwego adresu e-mail,
-- zachowania hasła w poufności,
-- nieudostępniania konta osobom trzecim,
-- natychmiastowego powiadomienia nas o podejrzeniu nieautoryzowanego dostępu do konta.
-
-Możesz korzystać z aplikacji jako gość (bez konta) w ograniczonym zakresie — bez możliwości zapisywania filmów ani przeglądania historii.
-
-Możesz usunąć swoje konto w dowolnym momencie w ustawieniach profilu lub pisząc na adres kontaktowy podany w Polityce Prywatności.
+Movie data (titles, descriptions, posters, ratings) is sourced from the third-party service TMDB (The Movie Database, themoviedb.org). StreamLens is not affiliated with TMDB and is not responsible for content provided by that service.
 
 
-## Zasady korzystania z aplikacji
+## Your Account
 
-Korzystając z StreamLens, zobowiązujesz się do przestrzegania prawa polskiego i europejskiego. Zabrania się w szczególności:
+To access the full functionality of the app, you need to create an account. By registering, you agree to:
 
-- korzystania z aplikacji w celach niezgodnych z prawem,
-- prób uzyskania nieautoryzowanego dostępu do systemów aplikacji lub kont innych użytkowników,
-- automatycznego pobierania danych (scraping),
-- podszywania się pod inne osoby.
+Provide a valid email address.
 
-Zastrzegamy sobie prawo do zablokowania lub usunięcia konta, które narusza powyższe zasady.
+Keep your password confidential.
 
+Not share your account with third parties.
 
-## Dane filmowe i prawa autorskie
+Notify us immediately if you suspect unauthorised access to your account.
 
-Dane o filmach (tytuły, opisy, plakaty, oceny) są dostarczane przez TMDB. Korzystanie z tych danych podlega warunkom korzystania z TMDB API (themoviedb.org/documentation/api/terms-of-use). StreamLens nie rości sobie żadnych praw do tych treści.
+You may use the app as a guest (without an account) with limited functionality — you will not be able to save movies or access your watch history.
 
-Oceny i informacje o dostępności filmów na platformach streamingowych mogą być nieaktualne lub niekompletne. StreamLens nie gwarantuje ich dokładności.
+You may delete your account at any time in the profile settings or by contacting us at the email address provided in the Privacy Policy.
 
 
-## Dostępność usługi
+## Acceptable Use
 
-StreamLens jest dostarczany w stanie „takim, jakim jest" (as-is) i „w miarę dostępności" (as-available). Nie gwarantujemy nieprzerwanego ani bezbłędnego działania aplikacji.
+By using StreamLens, you agree to comply with applicable laws. In particular, you must not:
 
-Zastrzegamy sobie prawo do:
-- czasowego wyłączenia aplikacji w celu przeprowadzenia prac konserwacyjnych,
-- zmiany funkcjonalności aplikacji,
-- trwałego zakończenia świadczenia usługi z zachowaniem 30-dniowego okresu wyprzedzenia.
+Use the app for any unlawful purpose.
 
+Attempt to gain unauthorised access to the app's systems or other users' accounts.
 
-## Odpowiedzialność
+Scrape or automatically extract data from the app.
 
-W maksymalnym zakresie dopuszczalnym przez obowiązujące prawo, StreamLens nie ponosi odpowiedzialności za:
+Impersonate any person or entity.
 
-- jakiekolwiek szkody pośrednie wynikające z korzystania lub niemożności korzystania z aplikacji,
-- niedokładność lub niekompletność danych filmowych dostarczanych przez TMDB,
-- utratę danych spowodowaną przez czynniki zewnętrzne lub awarię systemów,
-- działania lub zaniechania podmiotów trzecich (w tym Supabase i TMDB).
-
-Odpowiedzialność StreamLens wobec użytkownika jest ograniczona do kwoty faktycznie zapłaconej za usługę (jeśli dotyczy).
+We reserve the right to suspend or terminate accounts that violate these rules.
 
 
-## Wiek użytkowników
+## Movie Data and Intellectual Property
 
-Z aplikacji mogą korzystać osoby, które ukończyły 16 lat. Osoby między 13. a 16. rokiem życia mogą korzystać z aplikacji wyłącznie za zgodą rodzica lub opiekuna prawnego.
+Movie data (titles, descriptions, posters, ratings) is provided by TMDB. Use of this data is subject to the TMDB API Terms of Use (themoviedb.org/documentation/api/terms-of-use). StreamLens makes no claim to ownership of this content.
 
-
-## Zmiany Regulaminu
-
-Zastrzegamy sobie prawo do zmiany niniejszego Regulaminu. O istotnych zmianach poinformujemy Cię za pośrednictwem aplikacji lub na podany adres e-mail z co najmniej 14-dniowym wyprzedzeniem. Dalsze korzystanie z aplikacji po wejściu w życie zmian oznacza ich akceptację.
+Ratings and streaming availability information may be out of date or incomplete. StreamLens does not guarantee their accuracy.
 
 
-## Prawo właściwe
+## Service Availability
 
-Niniejszy Regulamin podlega prawu polskiemu. Wszelkie spory wynikające z korzystania z aplikacji będą rozstrzygane przez sądy właściwe dla miejsca siedziby administratora, chyba że obowiązujące przepisy prawa konsumenckiego stanowią inaczej.
+StreamLens is provided "as is" and "as available". We do not guarantee uninterrupted or error-free operation of the app.
+
+We reserve the right to:
+
+Temporarily suspend the app for maintenance.
+
+Modify app functionality.
+
+Permanently discontinue the service with 30 days' notice.
 
 
-## Kontakt
+## Limitation of Liability
 
-W przypadku pytań dotyczących Regulaminu skontaktuj się z nami pod adresem podanym w Polityce Prywatności.
+To the maximum extent permitted by applicable law, StreamLens is not liable for:
+
+Any indirect or consequential damages arising from the use of or inability to use the app.
+
+Inaccuracies or incompleteness of movie data provided by TMDB.
+
+Data loss caused by external factors or system failures.
+
+Actions or omissions of third parties (including Supabase and TMDB).
+
+StreamLens's liability to you is limited to the amount actually paid for the service (if applicable).
+
+
+## Age Requirements
+
+The app may be used by persons aged 16 and over. Persons between the ages of 13 and 16 may use the app only with the consent of a parent or legal guardian.
+
+
+## Changes to These Terms
+
+We reserve the right to update these Terms of Service. We will notify you of any significant changes through the app or by email with at least 14 days' notice. Continued use of the app after changes take effect constitutes your acceptance of the updated terms.
+
+
+## Governing Law
+
+These Terms of Service are governed by the laws of the Republic of Poland. Any disputes arising from the use of the app will be resolved by the courts with jurisdiction over the controller's registered address, unless applicable consumer protection law provides otherwise.
+
+
+## Contact
+
+For any questions about these Terms, please contact us at the address provided in the Privacy Policy.
 `.trim()

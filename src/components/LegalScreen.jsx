@@ -14,7 +14,7 @@ export function LegalScreen({ title, content, onBack }) {
     <div className="screen legal-screen">
       {/* Header */}
       <div className="legal-header">
-        <button type="button" className="legal-header__back" onClick={onBack} aria-label="Wróć">
+        <button type="button" className="legal-header__back" onClick={onBack} aria-label="Back">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="15 18 9 12 15 6" />
           </svg>

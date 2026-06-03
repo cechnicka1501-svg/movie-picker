@@ -7,21 +7,23 @@ import { termsOfService } from '../data/termsOfService.js'
 
 export function AuthScreen() {
   const { enterGuestMode } = useAuth()
-  const [mode, setMode] = useState('login')         // 'login' | 'register'
-  const [legalView, setLegalView] = useState(null)  // null | 'privacy' | 'terms'
 
-  // Show legal document inline — no App.jsx routing needed
-  if (legalView === 'privacy') {
-    return <LegalScreen title="Polityka Prywatności" content={privacyPolicy} onBack={() => setLegalView(null)} />
-  }
-  if (legalView === 'terms') {
-    return <LegalScreen title="Regulamin" content={termsOfService} onBack={() => setLegalView(null)} />
-  }
-  const [email, setEmail] = useState('')
+  // All hooks must be declared at the top — never after a conditional return
+  const [mode, setMode]       = useState('login')   // 'login' | 'register'
+  const [legalView, setLegalView] = useState(null)  // null | 'privacy' | 'terms'
+  const [email, setEmail]     = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const [error, setError]     = useState(null)
   const [message, setMessage] = useState(null)
+
+  // Conditional renders come AFTER all hook declarations
+  if (legalView === 'privacy') {
+    return <LegalScreen title="Privacy Policy" content={privacyPolicy} onBack={() => setLegalView(null)} />
+  }
+  if (legalView === 'terms') {
+    return <LegalScreen title="Terms of Service" content={termsOfService} onBack={() => setLegalView(null)} />
+  }
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -142,13 +144,13 @@ export function AuthScreen() {
         </button>
 
         <p className="auth-legal">
-          Rejestrując się akceptujesz{' '}
+          By signing up you agree to our{' '}
           <button type="button" className="auth-legal-link" onClick={() => setLegalView('terms')}>
-            Regulamin
+            Terms of Service
           </button>
-          {' '}i{' '}
+          {' '}and{' '}
           <button type="button" className="auth-legal-link" onClick={() => setLegalView('privacy')}>
-            Politykę Prywatności
+            Privacy Policy
           </button>
         </p>
       </div>

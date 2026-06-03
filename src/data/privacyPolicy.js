@@ -1,86 +1,93 @@
 export const privacyPolicy = `
-## Polityka Prywatności StreamLens
+## Privacy Policy
 
-Ostatnia aktualizacja: 1 czerwca 2025 r.
+Last updated: June 1, 2025
 
-Niniejsza Polityka Prywatności opisuje, w jaki sposób StreamLens („my", „nas", „nasze") zbiera, przetwarza i chroni dane osobowe użytkowników aplikacji StreamLens zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 (RODO).
+This Privacy Policy describes how StreamLens ("we", "us", "our") collects, processes, and protects the personal data of users of the StreamLens application, in compliance with Regulation (EU) 2016/679 of the European Parliament and of the Council (GDPR).
 
 
-## Administrator danych
+## Data Controller
 
-Administratorem Twoich danych osobowych jest:
+The data controller for your personal data is:
 
 StreamLens
-E-mail: [EMAIL]
+Email: [EMAIL]
 
-W sprawach dotyczących ochrony danych osobowych możesz kontaktować się z nami pod powyższym adresem e-mail.
-
-
-## Jakie dane zbieramy
-
-Zbieramy wyłącznie dane niezbędne do działania aplikacji:
-
-**Dane konta:** adres e-mail, hasło (przechowywane wyłącznie w postaci zaszyfrowanej przez Supabase — nigdy nie mamy dostępu do Twojego hasła w postaci jawnej).
-
-**Dane aktywności:** lista filmów zapisanych do kolejki oglądania oraz historia obejrzanych filmów.
-
-**Dane techniczne:** w ramach normalnego działania aplikacji Supabase może zapisywać anonimowe logi połączeń (adres IP, czas połączenia) niezbędne do zapewnienia bezpieczeństwa i stabilności usługi.
-
-Nie zbieramy danych lokalizacji, plików cookies śledzących, danych analitycznych ani żadnych innych informacji ponad wymienione powyżej.
+For any questions regarding the protection of your personal data, please contact us at the email address above.
 
 
-## Cel i podstawa prawna przetwarzania
+## What Data We Collect
 
-Twoje dane przetwarzamy w następujących celach:
+We collect only the data necessary for the app to function:
 
-- **Zarządzanie kontem** — umożliwienie rejestracji, logowania i korzystania z aplikacji (podstawa: wykonanie umowy, art. 6 ust. 1 lit. b RODO).
-- **Personalizacja** — wyświetlanie rekomendacji filmowych na podstawie historii oglądania (podstawa: wykonanie umowy, art. 6 ust. 1 lit. b RODO).
-- **Bezpieczeństwo** — ochrona kont użytkowników przed nieautoryzowanym dostępem (podstawa: uzasadniony interes administratora, art. 6 ust. 1 lit. f RODO).
+Account data: email address, password (stored exclusively in hashed form by Supabase — we never have access to your password in plain text).
 
+Activity data: the list of movies saved to your watch queue and your watch history.
 
-## Gdzie przechowujemy dane
+Technical data: as part of normal operation, Supabase may store anonymous connection logs (IP address, connection time) necessary for the security and stability of the service.
 
-Twoje dane są przechowywane na serwerach Supabase Inc., zlokalizowanych w regionie eu-west-1 (Irlandia, Unia Europejska). Dane nie są przekazywane poza Europejski Obszar Gospodarczy.
-
-Supabase działa jako podmiot przetwarzający dane w imieniu StreamLens na podstawie umowy powierzenia przetwarzania danych zgodnej z wymogami RODO.
-
-Dane dotyczące filmów (tytuły, opisy, plakaty) pobierane są z API serwisu TMDB (The Movie Database). Do TMDB nie przesyłamy żadnych Twoich danych osobowych.
+We do not collect location data, tracking cookies, analytics data, or any information beyond the above.
 
 
-## Pliki cookie
+## Purpose and Legal Basis for Processing
 
-Aplikacja nie korzysta z plików cookie śledzących ani analitycznych. Używamy wyłącznie technicznego tokenu sesji, niezbędnego do utrzymania zalogowania — jest on usuwany po wylogowaniu się z aplikacji.
+We process your data for the following purposes:
 
+Account management — to enable registration, login, and use of the app (legal basis: performance of a contract, Art. 6(1)(b) GDPR).
 
-## Okres przechowywania danych
+Personalisation — to display movie recommendations based on your watch history (legal basis: performance of a contract, Art. 6(1)(b) GDPR).
 
-Przechowujemy Twoje dane przez czas posiadania przez Ciebie konta w aplikacji. Po usunięciu konta wszystkie Twoje dane osobowe są trwale usuwane z naszych systemów w ciągu 30 dni.
-
-
-## Twoje prawa
-
-Na podstawie RODO przysługują Ci następujące prawa:
-
-- **Prawo dostępu** — możesz zażądać informacji o tym, jakie dane posiadamy.
-- **Prawo do sprostowania** — możesz zaktualizować swoje dane w ustawieniach profilu.
-- **Prawo do usunięcia** — możesz usunąć konto wraz ze wszystkimi danymi bezpośrednio w aplikacji (Profil → Ustawienia) lub pisząc na adres [EMAIL].
-- **Prawo do przenoszenia danych** — możesz zażądać przekazania Twoich danych w formacie nadającym się do odczytu maszynowego.
-- **Prawo do sprzeciwu** — możesz wnieść sprzeciw wobec przetwarzania danych opartego na uzasadnionym interesie administratora.
-- **Prawo do ograniczenia przetwarzania** — możesz zażądać ograniczenia przetwarzania Twoich danych w określonych przypadkach.
-
-Aby skorzystać z powyższych praw, skontaktuj się z nami pod adresem [EMAIL]. Odpowiemy na Twoje żądanie w ciągu 30 dni.
-
-Masz również prawo wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych (UODO), jeśli uważasz, że przetwarzamy Twoje dane niezgodnie z prawem.
+Security — to protect user accounts from unauthorised access (legal basis: legitimate interests of the controller, Art. 6(1)(f) GDPR).
 
 
-## Zmiany Polityki Prywatności
+## Where We Store Your Data
 
-Zastrzegamy sobie prawo do zmiany niniejszej Polityki Prywatności. O istotnych zmianach poinformujemy Cię za pośrednictwem aplikacji lub na podany adres e-mail z co najmniej 14-dniowym wyprzedzeniem.
+Your data is stored on servers provided by Supabase Inc., located in the eu-west-1 region (Ireland, European Union). Data is not transferred outside the European Economic Area.
+
+Supabase acts as a data processor on behalf of StreamLens under a data processing agreement that complies with GDPR requirements.
+
+Movie data (titles, descriptions, posters) is fetched from the TMDB (The Movie Database) API. We do not send any of your personal data to TMDB.
 
 
-## Kontakt
+## Cookies
 
-W przypadku pytań dotyczących ochrony danych osobowych skontaktuj się z nami:
+The app does not use tracking or analytics cookies. We only use a technical session token necessary to keep you logged in — it is deleted when you log out of the app.
 
-E-mail: [EMAIL]
+
+## Data Retention
+
+We retain your data for as long as you hold an account with the app. Once you delete your account, all your personal data is permanently deleted from our systems within 30 days.
+
+
+## Your Rights
+
+Under the GDPR, you have the following rights:
+
+Right of access — you may request information about what data we hold about you.
+
+Right to rectification — you may update your data in the profile settings.
+
+Right to erasure — you may delete your account along with all associated data directly in the app (Profile > Settings) or by writing to [EMAIL].
+
+Right to data portability — you may request that your data be provided in a machine-readable format.
+
+Right to object — you may object to processing based on our legitimate interests.
+
+Right to restriction of processing — you may request that processing of your data be restricted in certain circumstances.
+
+To exercise any of the above rights, please contact us at [EMAIL]. We will respond to your request within 30 days.
+
+You also have the right to lodge a complaint with the supervisory authority responsible for data protection in your country of residence.
+
+
+## Changes to This Privacy Policy
+
+We reserve the right to update this Privacy Policy. We will notify you of any significant changes through the app or by email with at least 14 days' notice.
+
+
+## Contact
+
+If you have any questions about data protection, please contact us:
+
+Email: [EMAIL]
 `.trim()
